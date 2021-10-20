@@ -9,7 +9,7 @@ Build an app that makes an API request to a 3rd party API. The app should includ
   * [x] Display a loading message when an API request is in progress
   * [x] Display an error message if the API request fails
 * [x] Display / Iterate over the data in the UI
-* [ ] UI is styled with a CSS framework
+* [x] UI is styled with a CSS framework
 
 ## Example 3rd party web APIs to use
 
