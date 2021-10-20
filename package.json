@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "craco start",
-    "build": "reveal-md  --theme night --highlightTheme hybrid --css styles.css README.md --static dist",
+    "build": "craco build",
     "pdf": "reveal-md  --theme night --highlightTheme hybrid --css styles.css README.md --print slides.pdf"
   },
   "keywords": [],
