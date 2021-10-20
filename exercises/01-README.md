@@ -5,9 +5,9 @@ Build an app that makes an API request to a 3rd party API. The app should includ
 * [x] Choose a Free API to use
 * [x] Use useEffect to make an API request when the app loads
 * [x] Make an API request in response to a user action (like a search form or next page of results)
-* [ ] Keep track of loading and error state
-  * [ ] Display a loading message when an API request is in progress
-  * [ ] Display an error message if the API request fails
+* [x] Keep track of loading and error state
+  * [x] Display a loading message when an API request is in progress
+  * [x] Display an error message if the API request fails
 * [x] Display / Iterate over the data in the UI
 * [ ] UI is styled with a CSS framework
 

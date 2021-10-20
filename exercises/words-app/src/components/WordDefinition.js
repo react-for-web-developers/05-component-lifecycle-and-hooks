@@ -4,7 +4,7 @@ function WordDefinition({
   error
 }) {
   return (
-    <div>
+    <div className="bg-purple-50">
       <h1> Definition </h1>
       {loadingDefinition && (
         <div className="spinner-border" role="status">
