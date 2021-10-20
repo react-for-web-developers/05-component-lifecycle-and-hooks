@@ -25,6 +25,11 @@ function App() {
   const [hasWords, setHasWords] = useState(false)
   const [hasExamples, setHasExamples] = useState(false)
 
+  // LOADING STATES
+  const [loadingDefinition, setLoadingDefinition] = useState(false)
+  const [loadingSynonyms, setLoadingSynonyms] = useState(false)
+  const [loadingExamples, setLoadingExamples] = useState(false)
+
   const searchWord = (newWord) => {
     setWords([...words, newWord])
     setWord(newWord)
@@ -34,6 +39,7 @@ function App() {
   // API DEFINITION CALL
   useEffect(() => {
     async function getDefinition() {
+      setLoadingDefinition(true)
       setWordDefinition([])
       try {
         const { data } = await axios.request({
@@ -49,6 +55,7 @@ function App() {
       } catch (error) {
         console.log(error)
       }
+      setLoadingDefinition(false)
     }
     getDefinition()
   }, [word])
@@ -56,6 +63,7 @@ function App() {
   // API SYNONYM CALL
   useEffect(() => {
     async function getSynonyms() {
+      setLoadingSynonyms(true)
       try {
         const { data } = await axios.request({
           method: 'GET',
@@ -69,15 +77,17 @@ function App() {
         setWordSynonyms(data.synonyms)
         if(data.synonyms) { setHasSynonyms(true) }
       } catch (error) {
-
+        console.log(error)
       }
+      setLoadingSynonyms(false)
     }
     getSynonyms()
   }, [word])
 
   // API EXAMPLES CALL
   useEffect(() => {
-    async function getSynonyms() {
+    async function getExamples() {
+      setLoadingExamples(true)
       try {
         const { data } = await axios.request({
           method: 'GET',
@@ -93,16 +103,17 @@ function App() {
       } catch (error) {
         console.log(error)
       }
+      setLoadingExamples(false)
     }
-    getSynonyms()
+    getExamples()
   }, [word])
 
   return (
     <div>
       <NewWordForm searchWord={searchWord} />
-      { hasDefinition ? <WordDefinition definitions={wordDefinition} />: null }
-      { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} />: null }
-      { hasExamples ? <WordExample examples={wordExamples} />: null }
+      { hasDefinition ? <WordDefinition definitions={wordDefinition} loadingDefinition={loadingDefinition} />: null }
+      { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} loadingSynonyms={loadingSynonyms} />: null }
+      { hasExamples ? <WordExample examples={wordExamples} loadingExamples={loadingExamples} />: null }
 
       { hasWords ? <WordList words={words} />: null }
     </div>
