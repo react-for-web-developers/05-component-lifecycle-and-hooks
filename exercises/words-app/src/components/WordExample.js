@@ -1,6 +1,7 @@
 function WordExample({
   examples,
-  loadingExamples
+  loadingExamples,
+  error
 }) {
   return (
     <div>
@@ -10,10 +11,11 @@ function WordExample({
           <span class="visually-hidden">Loading...</span>
         </div>
       )}
+
       <ul>
         {examples.length >= 2 ? examples.map((example) => (
           <li key={example.index}>{example}</li>
-        )):'No Examples Available'}
+        )): error ? `No Examples Available (${error})`:null}
       </ul>
     </div>
   )

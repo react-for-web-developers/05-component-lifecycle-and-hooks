@@ -30,6 +30,11 @@ function App() {
   const [loadingSynonyms, setLoadingSynonyms] = useState(false)
   const [loadingExamples, setLoadingExamples] = useState(false)
 
+  // ERROR HANDLING
+  const [wordDefinitionError, setWordDefinitionError] = useState('')
+  const [wordSynonymsError, setWordSynonymsError] = useState('')
+  const [wordExamplesError, setWordExamplesError] = useState('')
+
   const searchWord = (newWord) => {
     setWords([...words, newWord])
     setWord(newWord)
@@ -41,6 +46,7 @@ function App() {
     async function getDefinition() {
       setLoadingDefinition(true)
       setWordDefinition([])
+      setWordDefinitionError('')
       try {
         const { data } = await axios.request({
           method: 'GET',
@@ -53,7 +59,7 @@ function App() {
         setWordDefinition(data.results)
         if(data.results) { setHasDefinition(true) }
       } catch (error) {
-        console.log(error)
+        setWordDefinitionError(error.message)
       }
       setLoadingDefinition(false)
     }
@@ -64,6 +70,8 @@ function App() {
   useEffect(() => {
     async function getSynonyms() {
       setLoadingSynonyms(true)
+      setWordSynonyms([])
+      setWordSynonymsError('')
       try {
         const { data } = await axios.request({
           method: 'GET',
@@ -77,7 +85,7 @@ function App() {
         setWordSynonyms(data.synonyms)
         if(data.synonyms) { setHasSynonyms(true) }
       } catch (error) {
-        console.log(error)
+        setWordSynonymsError(error.message)
       }
       setLoadingSynonyms(false)
     }
@@ -88,6 +96,8 @@ function App() {
   useEffect(() => {
     async function getExamples() {
       setLoadingExamples(true)
+      setWordExamples([])
+      setWordExamplesError('')
       try {
         const { data } = await axios.request({
           method: 'GET',
@@ -101,7 +111,7 @@ function App() {
         setWordExamples(data.examples)
         if(data.examples) { setHasExamples(true) }
       } catch (error) {
-        console.log(error)
+        setWordExamplesError(error.message)
       }
       setLoadingExamples(false)
     }
@@ -111,9 +121,9 @@ function App() {
   return (
     <div>
       <NewWordForm searchWord={searchWord} />
-      { hasDefinition ? <WordDefinition definitions={wordDefinition} loadingDefinition={loadingDefinition} />: null }
-      { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} loadingSynonyms={loadingSynonyms} />: null }
-      { hasExamples ? <WordExample examples={wordExamples} loadingExamples={loadingExamples} />: null }
+      { hasDefinition ? <WordDefinition definitions={wordDefinition} loadingDefinition={loadingDefinition} error={wordDefinitionError} />: null }
+      { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} loadingSynonyms={loadingSynonyms} error={wordSynonymsError} />: null }
+      { hasExamples ? <WordExample examples={wordExamples} loadingExamples={loadingExamples} error={wordExamplesError} />: null }
 
       { hasWords ? <WordList words={words} />: null }
     </div>

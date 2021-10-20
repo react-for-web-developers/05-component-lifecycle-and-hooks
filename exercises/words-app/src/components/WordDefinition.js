@@ -1,6 +1,7 @@
 function WordDefinition({
   definitions,
-  loadingDefinition
+  loadingDefinition,
+  error
 }) {
   return (
     <div>
@@ -10,10 +11,11 @@ function WordDefinition({
           <span class="visually-hidden">Loading...</span>
         </div>
       )}
+
       <ul>
-        {definitions ? definitions.map((definition) => (
+        {definitions.length >= 1 ? definitions.map((definition) => (
           <li key={definition.index}>{definition.definition}</li>
-        )): 'No Definitions available'}
+        )): error ? `No Definitions Available (${error})`:null}
       </ul>
     </div>
   )

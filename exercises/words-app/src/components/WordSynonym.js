@@ -1,6 +1,7 @@
 function WordSynonym({
   synonyms,
-  loadingSynonyms
+  loadingSynonyms,
+  error
 }) {
   return (
     <div>
@@ -10,10 +11,11 @@ function WordSynonym({
           <span class="visually-hidden">Loading...</span>
         </div>
       )}
+
       <ul>
         {synonyms.length >= 2 ? synonyms.map((synonym) => (
           <li key={synonym.index}>{synonym}</li>
-        )):'No Synonyms Available'}
+        )): error ? `No Synonyms Available (${error})`:null}
       </ul>
     </div>
   )
