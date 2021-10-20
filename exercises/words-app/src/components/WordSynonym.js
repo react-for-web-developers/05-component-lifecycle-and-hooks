@@ -7,14 +7,14 @@ function WordSynonym({
     <div>
       <h1> Synonyms </h1>
       {loadingSynonyms && (
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       )}
 
       <ul>
-        {synonyms.length >= 2 ? synonyms.map((synonym) => (
-          <li key={synonym.index}>{synonym}</li>
+        {synonyms ? synonyms.map((synonym) => (
+          <li key={synonym}>{synonym}</li>
         )): error ? `No Synonyms Available (${error})`:null}
       </ul>
     </div>

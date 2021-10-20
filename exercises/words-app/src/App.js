@@ -45,6 +45,7 @@ function App() {
   useEffect(() => {
     async function getDefinition() {
       setLoadingDefinition(true)
+      setHasDefinition(false)
       setWordDefinition([])
       setWordDefinitionError('')
       try {
@@ -57,7 +58,7 @@ function App() {
           }
           })
         setWordDefinition(data.results)
-        if(data.results) { setHasDefinition(true) }
+        if(data.results.length > 0) { setHasDefinition(true) }
       } catch (error) {
         setWordDefinitionError(error.message)
       }
@@ -70,6 +71,7 @@ function App() {
   useEffect(() => {
     async function getSynonyms() {
       setLoadingSynonyms(true)
+      setHasSynonyms(false)
       setWordSynonyms([])
       setWordSynonymsError('')
       try {
@@ -83,7 +85,7 @@ function App() {
           })
         
         setWordSynonyms(data.synonyms)
-        if(data.synonyms) { setHasSynonyms(true) }
+        if(data.synonyms.length > 0) { setHasSynonyms(true) }
       } catch (error) {
         setWordSynonymsError(error.message)
       }
@@ -97,6 +99,7 @@ function App() {
     async function getExamples() {
       setLoadingExamples(true)
       setWordExamples([])
+      setHasExamples(false)
       setWordExamplesError('')
       try {
         const { data } = await axios.request({
@@ -109,7 +112,7 @@ function App() {
           })
         
         setWordExamples(data.examples)
-        if(data.examples) { setHasExamples(true) }
+        if(data.examples.length > 0) { setHasExamples(true) }
       } catch (error) {
         setWordExamplesError(error.message)
       }
@@ -121,6 +124,7 @@ function App() {
   return (
     <div>
       <NewWordForm searchWord={searchWord} />
+      {wordDefinitionError && wordSynonymsError && wordExamplesError ? <h4>API returned no results</h4>:null}
       { hasDefinition ? <WordDefinition definitions={wordDefinition} loadingDefinition={loadingDefinition} error={wordDefinitionError} />: null }
       { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} loadingSynonyms={loadingSynonyms} error={wordSynonymsError} />: null }
       { hasExamples ? <WordExample examples={wordExamples} loadingExamples={loadingExamples} error={wordExamplesError} />: null }

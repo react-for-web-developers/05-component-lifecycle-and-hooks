@@ -7,15 +7,15 @@ function WordExample({
     <div>
       <h1> Examples </h1>
       {loadingExamples && (
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       )}
 
       <ul>
-        {examples.length >= 2 ? examples.map((example) => (
-          <li key={example.index}>{example}</li>
-        )): error ? `No Examples Available (${error})`:null}
+        {examples.map((example) => (
+          <li key={example}>{example}</li>
+        ))}
       </ul>
     </div>
   )
