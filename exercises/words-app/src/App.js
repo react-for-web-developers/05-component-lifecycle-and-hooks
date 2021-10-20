@@ -17,12 +17,13 @@ function App() {
   const [wordDefinition, setWordDefinition] = useState([])
   const [wordSynonyms, setWordSynonyms] = useState([])
   const [hasSynonyms, setHasSynonyms] = useState(false)
-  const [word, setWord] = useState('')
+  const [hasWords, setHasWords] = useState(false)
+  const [word, setWord] = useState(null)
 
   const searchWord = (newWord) => {
-    console.log(newWord)
     setWords([...words, newWord])
     setWord(newWord)
+    setHasWords(true)
   }
 
   useEffect(() => {
@@ -37,10 +38,10 @@ function App() {
             'x-rapidapi-host': process.env.REACT_APP_WORDAPI_HOST
           }
           })
-        setHasDefinition(true)
         setWordDefinition(data.results)
+        if(data.results) { setHasDefinition(true) }
       } catch (error) {
-
+        console.log(error)
       }
     }
     getDefinition()
@@ -57,8 +58,9 @@ function App() {
             'x-rapidapi-host': process.env.REACT_APP_WORDAPI_HOST
           }
           })
+        
         setWordSynonyms(data.synonyms)
-        console.log(data)
+        if(data.synonyms) { setHasSynonyms(true) }
       } catch (error) {
 
       }
@@ -69,9 +71,9 @@ function App() {
   return (
     <div>
       <NewWordForm searchWord={searchWord} />
-      <WordDefinition definitions={wordDefinition} />
-      <WordSynonym synonyms={wordSynonyms} />
-      <WordList words={words} />
+      {hasDefinition ? <WordDefinition definitions={wordDefinition} />: null}
+      {hasSynonyms ? <WordSynonym synonyms={wordSynonyms} />: null}
+      {hasWords ? <WordList words={words} />: null}
     </div>
   );
 }
