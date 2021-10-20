@@ -10,15 +10,20 @@ import NewWordForm from './components/NewWordForm'
 import WordList from './components/WordList'
 import WordDefinition from './components/WordDefinition'
 import WordSynonym from './components/WordSynonym'
+import WordExample from './components/WordExample'
 
 function App() {
+  const [word, setWord] = useState(null)
   const [words, setWords] = useState([])  // History of prior searched words
-  const [hasDefinition, setHasDefinition] = useState(false)
+  
   const [wordDefinition, setWordDefinition] = useState([])
   const [wordSynonyms, setWordSynonyms] = useState([])
+  const [wordExamples, setWordExamples] = useState([])
+
+  const [hasDefinition, setHasDefinition] = useState(false)
   const [hasSynonyms, setHasSynonyms] = useState(false)
   const [hasWords, setHasWords] = useState(false)
-  const [word, setWord] = useState(null)
+  const [hasExamples, setHasExamples] = useState(false)
 
   const searchWord = (newWord) => {
     setWords([...words, newWord])
@@ -26,6 +31,7 @@ function App() {
     setHasWords(true)
   }
 
+  // API DEFINITION CALL
   useEffect(() => {
     async function getDefinition() {
       setWordDefinition([])
@@ -47,6 +53,7 @@ function App() {
     getDefinition()
   }, [word])
 
+  // API SYNONYM CALL
   useEffect(() => {
     async function getSynonyms() {
       try {
@@ -68,12 +75,36 @@ function App() {
     getSynonyms()
   }, [word])
 
+  // API EXAMPLES CALL
+  useEffect(() => {
+    async function getSynonyms() {
+      try {
+        const { data } = await axios.request({
+          method: 'GET',
+          url: `https://${process.env.REACT_APP_WORDAPI_HOST}/words/${word.word}/examples`,
+          headers: {
+            'x-rapidapi-key': process.env.REACT_APP_WORDAPI_KEY,
+            'x-rapidapi-host': process.env.REACT_APP_WORDAPI_HOST
+          }
+          })
+        
+        setWordExamples(data.examples)
+        if(data.examples) { setHasExamples(true) }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getSynonyms()
+  }, [word])
+
   return (
     <div>
       <NewWordForm searchWord={searchWord} />
-      {hasDefinition ? <WordDefinition definitions={wordDefinition} />: null}
-      {hasSynonyms ? <WordSynonym synonyms={wordSynonyms} />: null}
-      {hasWords ? <WordList words={words} />: null}
+      { hasDefinition ? <WordDefinition definitions={wordDefinition} />: null }
+      { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} />: null }
+      { hasExamples ? <WordExample examples={wordExamples} />: null }
+
+      { hasWords ? <WordList words={words} />: null }
     </div>
   );
 }
