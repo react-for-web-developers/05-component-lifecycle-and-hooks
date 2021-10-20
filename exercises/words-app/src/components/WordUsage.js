@@ -4,19 +4,20 @@ function WordUsage({
   error
 }) {
   return (
-    <div>
-      <h1> Usage Of </h1>
+    <div className="mx-12 bg-red-200 rounded-3xl shadow-xl p-5">
+      <h1 className="font-mono font-bold text-2xl"> Usage Of </h1>
       {loadingUsage && (
         <div className="spinner-border" role="status">
+          <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24" />
           <span className="visually-hidden">Loading...</span>
         </div>
       )}
 
-      <ul>
+      <div className="flex flex-row flex-wrap">
         {usages ? usages.map((usage) => (
-          <li key={usage}>{usage}</li>
+          <div className="border-2 border-red-300 m-1 pl-3 pr-3 rounded-2xl" key={usage}>{usage}</div>
         )): error ? `No Usage Available (${error})`:null}
-      </ul>
+      </div>
     </div>
   )
 }

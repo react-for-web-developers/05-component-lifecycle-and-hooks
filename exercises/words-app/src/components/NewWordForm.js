@@ -10,20 +10,21 @@ function NewWordForm( { searchWord }) {
 
   const formSubmitted = (event) => {
     event.preventDefault()
+    if(newWord && newWord.trim() !== "") {
     searchWord({
       id: Date.now(),
-      word: newWord,
-      hasDefinition: false,
+      word: newWord
     })
     setNewWord('')
   }
+  }
 
   return (
-    <div>
+    <div className="flex flex-wrap justify-center bg-indigo-300 mx-full mb-12 h-24 content-center">
       <form onSubmit={formSubmitted}>
-        <label htmlFor="newWord"> Lookup the following word: </label>
-        <input onChange={updateNewWord} id="newWord" value={newWord} />&nbsp;
-        <button>Search</button> 
+        <label htmlFor="newWord"> Enter a word: </label>
+        <input className="rounded-xl bg-gray-100 pl-2" onChange={updateNewWord} id="newWord" value={newWord} />
+        <button className="rounded-lg bg-indigo-500 shadow-xl m-2 p-1 w-24 text-white ring-4">Search</button> 
       </form>
     </div>
   );

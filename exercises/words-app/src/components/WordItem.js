@@ -2,9 +2,9 @@ function WordItem({
   word
 }) {
   return (
-    <li>
-      {word.word}&nbsp;
-    </li>
+    <div className="border-2 m-1 border-yellow-700 rounded-xl pl-5 pr-5 text-center">
+      {word.word}
+    </div>
   )
 }
 

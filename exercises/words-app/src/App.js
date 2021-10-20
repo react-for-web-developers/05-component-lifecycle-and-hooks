@@ -155,14 +155,19 @@ function App() {
 
   return (
     <div>
-      <NewWordForm searchWord={searchWord} />
-      {wordDefinitionError && wordSynonymsError && wordExamplesError && wordUsageError ? <h4>Enter a word and click search to receive word analysis...</h4>:null}
-      { hasDefinition ? <WordDefinition definitions={wordDefinition} loadingDefinition={loadingDefinition} error={wordDefinitionError} />: null }
-      { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} loadingSynonyms={loadingSynonyms} error={wordSynonymsError} />: null }
-      { hasExamples ? <WordExample examples={wordExamples} loadingExamples={loadingExamples} error={wordExamplesError} />: null }
-      { hasUsage ? <WordUsage usages={wordUsage} loadingExamples={loadingUsage} error={wordUsageError} />: null }
-
+      <div>
+        <NewWordForm searchWord={searchWord} />
+      </div>
+      <div>
       { hasWords ? <WordList words={words} />: null }
+      </div>
+      <div className="grid gap-5 mt-5">
+        {wordDefinitionError && wordSynonymsError && wordExamplesError && wordUsageError ? <h4 className="flex flex-wrap justify-center content-center">Enter a word and click search to receive word analysis...</h4>:null}
+        { hasDefinition ? <WordDefinition definitions={wordDefinition} loadingDefinition={loadingDefinition} error={wordDefinitionError} />: null }
+        { hasSynonyms ? <WordSynonym synonyms={wordSynonyms} loadingSynonyms={loadingSynonyms} error={wordSynonymsError} />: null }
+        { hasExamples ? <WordExample examples={wordExamples} loadingExamples={loadingExamples} error={wordExamplesError} />: null }
+        { hasUsage ? <WordUsage usages={wordUsage} loadingExamples={loadingUsage} error={wordUsageError} />: null }
+      </div>
     </div>
   );
 }
