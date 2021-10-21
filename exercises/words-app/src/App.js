@@ -44,7 +44,7 @@ function App() {
     setWords([...words, newWord])
     setWord(newWord)
     setHasWords(true)
-  }
+  } 
 
   // API DEFINITION CALL
   useEffect(() => {

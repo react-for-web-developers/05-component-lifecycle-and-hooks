@@ -7,9 +7,9 @@ function WordUsage({
     <div className="mx-12 bg-red-200 rounded-3xl shadow-xl p-5">
       <h1 className="font-mono font-bold text-2xl"> Usage Of </h1>
       {loadingUsage && (
-        <div className="spinner-border" role="status">
+        <div>
           <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24" />
-          <span className="visually-hidden">Loading...</span>
+          <span className="visually-hidden">Looking for word usage...</span>
         </div>
       )}
 
